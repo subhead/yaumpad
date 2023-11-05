@@ -144,31 +144,35 @@ void matrix_scan_user(void) {
 
 
 bool oled_task_user() {
+
+   // static int led_matrix = 32;
+
     switch (get_highest_layer(layer_state)) {
         case _BASE :
-            // center text
-            //oled_set_cursor(0, 0);
-            //oled_write_ln("", false);
+            uprintf("%i MAX,", oled_max_chars());
             oled_offset_layer = (oled_max_chars() - strlen("* BASE *")) / 2;
+            uprintf(" %i layer,", oled_offset_layer);
             oled_set_cursor(oled_offset_layer, 0);
-            //oled_write_ln("* BASE *", false);
             oled_write_P(PSTR("* BASE *\n"), false);
             
             // row 1
             oled_set_cursor(0, 2);
             oled_write_ln("ENT", false);
 
-            oled_offset_row1 = strlen("ENT") + 1;
+            oled_offset_row1 = (((oled_max_chars() - strlen("ENT")) / 2) - strlen("AST")) / 2;
+            uprintf(" %i row1,", oled_offset_row1);
             oled_set_cursor(oled_offset_row1, 2);
-            oled_write_ln("MIN", false);
+            oled_write_ln("AST", false);
 
-            oled_offset_row2 = oled_offset_row1 + strlen("MIN") + 1;
-            oled_set_cursor(oled_offset_row2, 2);
+            oled_offset_row2 = oled_offset_row1 + strlen("AST") + 1;
+            uprintf(" %i row2,", oled_offset_row2);
+            oled_set_cursor(64, 2);
             oled_write_ln("SLHS", false);
             
             oled_offset_row3 = oled_offset_row2 + strlen("SLHS") + 1;
-            oled_set_cursor(oled_offset_row3, 2);
-            oled_write_ln("PLS", false);
+            uprintf(" %i row3,", oled_offset_row3);
+            oled_set_cursor(96, 2);
+            oled_write_ln("RST", false);
 
             break;
 
