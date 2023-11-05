@@ -6,6 +6,21 @@
 
 #define USB_POLLING_INTERVAL_MS 1
 
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET // Activates the double-tap behavior
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 500U // Timeout window in ms in which the double tap can occur.
+#define SERIAL_USART_FULL_DUPLEX
+
+
+// OLED
+#define HAL_USE_I2C TRUE
+#define I2C_DRIVER I2CD0
+#define I2C1_SDA_PIN GP12
+#define I2C1_SCL_PIN GP13
+
+#define OLED_DISPLAY_128X64
+#define OLED_TRANSPORT = i2c
+
+
 /*
  * Feature disable options
  *  These options are also useful to firmware size reduction.
@@ -22,9 +37,6 @@
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
 
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 200U
-#define SERIAL_USART_FULL_DUPLEX
 
 #ifdef CONSOLE_ENABLE
     #define CONSOLE_ENABLED
