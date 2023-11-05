@@ -90,28 +90,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * └───┴───┴───┴───┘
      */
     [_BASE] = LAYOUT_4x4(        
-        KC_PENT,   KC_PMNS,   KC_PSLS,   TG(_BASE),
+        KC_PENT,   KC_PMNS,   KC_PSLS,   TO(0),
         KC_PMNS,   KC_7,      KC_8,      KC_9,
         KC_PPLS,   KC_4,      KC_5,      KC_6,
         KC_0,      KC_1,      KC_2,      KC_3
         ),
     [_FN1] = LAYOUT_4x4(
-        KC_MOD_BTN1,   KC_MOD_BTN2,   KC_MOD_BTN3,   TG(_BASE),
+        KC_MOD_BTN1,   KC_MOD_BTN2,   KC_MOD_BTN3,   TO(0),
         KC_MOD_BTN4,   KC_MOD_BTN5,   KC_MOD_BTN6,   KC_MOD_BTN7,
         KC_MOD_BTN8,   KC_MOD_BTN9,   KC_MOD_BTN10,  KC_MOD_BTN11,
         KC_MOD_BTN2,   KC_F24,        KC_MOD_BTN14,  KC_MOD_BTN15
     ),
     [_FN2] = LAYOUT_4x4(
-        _______,   _______,   _______,   TG(_BASE),
-        _______,   _______,   _______,   TO(_BASE),
-        KC_TEST,   _______,   _______,   TG(_BASE),
+        _______,   _______,   _______,   TO(0),
+        _______,   _______,   _______,   _______,
+        KC_TEST,   _______,   _______,   _______,
         _______,   _______,   _______,   _______
     ),
     [_FN3] = LAYOUT_4x4(
-        _______,   _______,   _______,   TG(_BASE),
-        _______,   _______,   _______,   _______,
-        _______,   _______,   _______,   _______,
-        KC_TEST,   _______,   _______,   _______
+        KC_LALT,   _______,   KC_LSFT,   TO(0),
+        KC_LCTL,   _______,   KC_UP,   KC_RCTL,
+        _______,   KC_LEFT,   _______,   KC_RIGHT,
+        KC_TEST,   _______,   KC_DOWN,   _______
     )
 };
 
@@ -215,7 +215,7 @@ bool oled_task_user() {
             //oled_write_P(PSTR(" \n"), false);
             oled_offset_layer = (oled_max_chars() - strlen("* FN3 *")) / 2;
             oled_set_cursor(oled_offset_layer, 0);
-            oled_write("* FN1 *", false);
+            oled_write("* FN3 *", false);
             //oled_write_P(PSTR("* FN3 *\n"), false);
             //oled_set_cursor(0,2);
             //oled_write_P(PSTR(" \n"), false);
