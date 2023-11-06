@@ -20,9 +20,9 @@
 
 
 static int oled_offset_layer = 0;
-static int oled_offset_row1 = 0;
-static int oled_offset_row2 = 0;
-static int oled_offset_row3 = 0;
+// static int oled_offset_row1 = 0;
+// static int oled_offset_row2 = 0;
+// static int oled_offset_row3 = 0;
 
 
 // define layers
@@ -146,6 +146,7 @@ void matrix_scan_user(void) {
 bool oled_task_user() {
 
    // static int led_matrix = 32;
+   //oled_write_P(PSTR("      "), false);
 
     switch (get_highest_layer(layer_state)) {
         case _BASE :
@@ -156,73 +157,101 @@ bool oled_task_user() {
             oled_write_P(PSTR("* BASE *\n"), false);
             
             // row 1
-            oled_set_cursor(0, 2);
-            oled_write_ln("ENT", false);
+            //oled_set_cursor(0, 2);
+            //oled_write_ln("ENT", false);
+            oled_write_P(PSTR("ENT "), false);
+            oled_write_P(PSTR(" AST "), false);
+            oled_write_P(PSTR(" SLHS "), false);
+            oled_write_P(PSTR(" RST\n\n"), false);
 
-            oled_offset_row1 = (((oled_max_chars() - strlen("ENT")) / 2) - strlen("AST")) / 2;
-            uprintf(" %i row1,", oled_offset_row1);
-            oled_set_cursor(oled_offset_row1, 2);
-            oled_write_ln("AST", false);
+            oled_write_P(PSTR("MIN "), false);
+            oled_write_P(PSTR(" 7 "), false);
+            oled_write_P(PSTR(" 8 "), false);
+            oled_write_P(PSTR(" 9\n\n"), false);
 
-            oled_offset_row2 = oled_offset_row1 + strlen("AST") + 1;
-            uprintf(" %i row2,", oled_offset_row2);
-            oled_set_cursor(64, 2);
-            oled_write_ln("SLHS", false);
+            oled_write_P(PSTR("PLUS "), false);
+            oled_write_P(PSTR(" 4 "), false);
+            oled_write_P(PSTR(" 5 "), false);
+            oled_write_P(PSTR(" 6\n\n"), false);
+
+            oled_write_P(PSTR("0 "), false);
+            oled_write_P(PSTR(" 1 "), false);
+            oled_write_P(PSTR(" 2 "), false);
+            oled_write_P(PSTR(" 3\n\n"), false);
+
+
+            //oled_offset_row1 = (((oled_max_chars() - strlen("ENT")) / 2) - strlen("AST")) / 2;
+            //uprintf(" %i row1,", oled_offset_row1);
+            //oled_set_cursor(oled_offset_row1, 2);
+            //oled_write_ln("AST", false);
+
+            //oled_offset_row2 = oled_offset_row1 + strlen("AST") + 1;
+            //uprintf(" %i row2,", oled_offset_row2);
+            //oled_set_cursor(64, 2);
+            //oled_write_ln("SLHS", false);
             
-            oled_offset_row3 = oled_offset_row2 + strlen("SLHS") + 1;
-            uprintf(" %i row3,", oled_offset_row3);
-            oled_set_cursor(96, 2);
-            oled_write_ln("RST", false);
+            //oled_offset_row3 = oled_offset_row2 + strlen("SLHS") + 1;
+            //uprintf(" %i row3,", oled_offset_row3);
+            //oled_set_cursor(96, 2);
+            //oled_write_ln("RST", false);
 
             break;
 
         case _FN1:
            // oled_set_cursor(0,0);
            // oled_write_P(PSTR(" \n"), false);
-            oled_offset_layer = (oled_max_chars() - strlen("* FN1 *")) / 2;
-            oled_set_cursor(oled_offset_layer, 0);
-            //oled_write("* FN1 *", false);
-            oled_write_P(PSTR("* FN1 *\n"), false);
-            //oled_set_cursor(0,2);
-            //oled_write_P(PSTR(" \n"), false);
-            // row 1
-            oled_set_cursor(0, 2);
-            oled_write_ln("M1", false);
+            // oled_offset_layer = (oled_max_chars() - strlen("* FN1 *")) / 2;
+            // //oled_set_cursor(oled_offset_layer, 0);
+            // //oled_write("* FN1 *", false);
+            // oled_write_P(PSTR("* FN1 *\n"), false);
+            // //oled_set_cursor(0,2);
+            // //oled_write_P(PSTR(" \n"), false);
+            // // row 1
+            // oled_set_cursor(0, 2);
+            // oled_write_ln("M1", false);
 
-            oled_offset_row1 = strlen("M1") + 1;
-            oled_set_cursor(oled_offset_row1, 2);
-            oled_write_ln("M2", false);
+            // oled_offset_row1 = strlen("M1") + 1;
+            // oled_set_cursor(oled_offset_row1, 2);
+            // oled_write_ln("M2", false);
 
-            oled_offset_row2 = oled_offset_row1 + strlen("M3") + 1;
-            oled_set_cursor(oled_offset_row2, 2);
-            oled_write_ln("M3", false);
+            // oled_offset_row2 = oled_offset_row1 + strlen("M3") + 1;
+            // oled_set_cursor(oled_offset_row2, 2);
+            // oled_write_ln("M3", false);
             
-            oled_offset_row3 = oled_offset_row2 + strlen("M4") + 1;
-            oled_set_cursor(oled_offset_row3, 2);
-            oled_write_ln("M4", false);
+            // oled_offset_row3 = oled_offset_row2 + strlen("M4") + 1;
+            // oled_set_cursor(oled_offset_row3, 2);
+            // oled_write_ln("M4", false);
+
+            oled_write_P(PSTR("* FN1 *\n"), false);
+            
+            oled_write_P(PSTR("BT1 "), false);
+            oled_write_P(PSTR(" BT2 "), false);
+            oled_write_P(PSTR(" BT3 "), false);
+            oled_write_P(PSTR(" RST\n\n"), false);
+
+            oled_write_P(PSTR("BT4 "), false);
+            oled_write_P(PSTR(" BT5 "), false);
+            oled_write_P(PSTR(" BT6 "), false);
+            oled_write_P(PSTR(" BT7\n\n"), false);
+
+            oled_write_P(PSTR("BT8 "), false);
+            oled_write_P(PSTR("BT9 "), false);
+            oled_write_P(PSTR("BT10 "), false);
+            oled_write_P(PSTR("BT11\n\n"), false);
+
+            oled_write_P(PSTR("BT12 "), false);
+            oled_write_P(PSTR("BT13 "), false);
+            oled_write_P(PSTR("BT14 "), false);
+            oled_write_P(PSTR("BT15\n\n"), false);
 
             break;
 
         case _FN2:
-            //oled_set_cursor(0,0);
-            //oled_write_P(PSTR(" \n"), false);
-            oled_offset_layer = (oled_max_chars() - strlen("* FN2 *")) / 2;
-            oled_set_cursor(oled_offset_layer, 0);
-            //oled_write("* FN1 *", false);
             oled_write_P(PSTR("* FN2 *\n"), false);
-            //oled_set_cursor(0,2);
-            //oled_write_P(PSTR(" \n"), false);
             break;
 
         case _FN3:
-            //oled_set_cursor(0,0);
-            //oled_write_P(PSTR(" \n"), false);
-            oled_offset_layer = (oled_max_chars() - strlen("* FN3 *")) / 2;
-            oled_set_cursor(oled_offset_layer, 0);
-            oled_write("* FN3 *", false);
-            //oled_write_P(PSTR("* FN3 *\n"), false);
-            //oled_set_cursor(0,2);
-            //oled_write_P(PSTR(" \n"), false);
+            oled_write_P(PSTR("* FN3 *\n"), false);
             break;
     }
     return false;
