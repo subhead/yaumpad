@@ -18,7 +18,8 @@
 #define I2C1_SCL_PIN GP13
 
 #define OLED_DISPLAY_128X64
-#define OLED_TRANSPORT = i2c
+#define OLED_UPDATE_INTERVAL 50
+
 
 
 /*

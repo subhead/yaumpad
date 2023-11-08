@@ -18,11 +18,9 @@
 
 #define ARRAYSIZE(arr) sizeof(arr) / sizeof(arr[0])
 
-
-static int oled_offset_layer = 0;
-// static int oled_offset_row1 = 0;
-// static int oled_offset_row2 = 0;
-// static int oled_offset_row3 = 0;
+#ifdef OLED_ENABLE
+    static int oled_offset_layer = 0;
+#endif
 
 
 // define layers
@@ -90,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * └───┴───┴───┴───┘
      */
     [_BASE] = LAYOUT_4x4(        
-        KC_PENT,   KC_PMNS,   KC_PSLS,   TO(0),
+        KC_PENT,   KC_PAST,   KC_PSLS,   TO(0),
         KC_PMNS,   KC_7,      KC_8,      KC_9,
         KC_PPLS,   KC_4,      KC_5,      KC_6,
         KC_0,      KC_1,      KC_2,      KC_3
@@ -99,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_MOD_BTN1,   KC_MOD_BTN2,   KC_MOD_BTN3,   TO(0),
         KC_MOD_BTN4,   KC_MOD_BTN5,   KC_MOD_BTN6,   KC_MOD_BTN7,
         KC_MOD_BTN8,   KC_MOD_BTN9,   KC_MOD_BTN10,  KC_MOD_BTN11,
-        KC_MOD_BTN2,   KC_F24,        KC_MOD_BTN14,  KC_MOD_BTN15
+        KC_MOD_BTN2,   KC_MOD_BTN13,        KC_MOD_BTN14,  KC_MOD_BTN15
     ),
     [_FN2] = LAYOUT_4x4(
         _______,   _______,   _______,   TO(0),
@@ -132,6 +130,10 @@ void keyboard_post_init_user(void) {
         debug_keyboard=true;
         //debug_mouse=true;
     #endif
+
+    #ifdef OLED_ENABLE
+        oled_clear();
+    #endif
 }
 
 
@@ -142,121 +144,55 @@ void matrix_init_user(void) {
 void matrix_scan_user(void) {
 }
 
-
+#ifdef OLED_ENABLE
 bool oled_task_user() {
 
-   // static int led_matrix = 32;
-   //oled_write_P(PSTR("      "), false);
+    oled_write_P(PSTR("\n"), false);
 
     switch (get_highest_layer(layer_state)) {
         case _BASE :
-            uprintf("%i MAX,", oled_max_chars());
             oled_offset_layer = (oled_max_chars() - strlen("* BASE *")) / 2;
             uprintf(" %i layer,", oled_offset_layer);
             oled_set_cursor(oled_offset_layer, 0);
             oled_write_P(PSTR("* BASE *\n"), false);
-            
-            // row 1
-            //oled_set_cursor(0, 2);
-            //oled_write_ln("ENT", false);
-            oled_write_P(PSTR("ENT "), false);
-            oled_write_P(PSTR(" AST "), false);
-            oled_write_P(PSTR(" SLHS "), false);
-            oled_write_P(PSTR(" RST\n\n"), false);
-
-            oled_write_P(PSTR("MIN "), false);
-            oled_write_P(PSTR(" 7 "), false);
-            oled_write_P(PSTR(" 8 "), false);
-            oled_write_P(PSTR(" 9\n\n"), false);
-
-            oled_write_P(PSTR("PLUS "), false);
-            oled_write_P(PSTR(" 4 "), false);
-            oled_write_P(PSTR(" 5 "), false);
-            oled_write_P(PSTR(" 6\n\n"), false);
-
-            oled_write_P(PSTR("0 "), false);
-            oled_write_P(PSTR(" 1 "), false);
-            oled_write_P(PSTR(" 2 "), false);
-            oled_write_P(PSTR(" 3\n\n"), false);
-
-
-            //oled_offset_row1 = (((oled_max_chars() - strlen("ENT")) / 2) - strlen("AST")) / 2;
-            //uprintf(" %i row1,", oled_offset_row1);
-            //oled_set_cursor(oled_offset_row1, 2);
-            //oled_write_ln("AST", false);
-
-            //oled_offset_row2 = oled_offset_row1 + strlen("AST") + 1;
-            //uprintf(" %i row2,", oled_offset_row2);
-            //oled_set_cursor(64, 2);
-            //oled_write_ln("SLHS", false);
-            
-            //oled_offset_row3 = oled_offset_row2 + strlen("SLHS") + 1;
-            //uprintf(" %i row3,", oled_offset_row3);
-            //oled_set_cursor(96, 2);
-            //oled_write_ln("RST", false);
-
+            oled_write_P(PSTR("ENT  AST  SLHS  RST\n\n"), false);
+            oled_write_P(PSTR("MIN   7    8    9\n\n"), false);
+            oled_write_P(PSTR("PLS   4    5    6\n\n"), false);
+            oled_write_P(PSTR(" 0    1    2    3\n"), false);
             break;
 
         case _FN1:
-           // oled_set_cursor(0,0);
-           // oled_write_P(PSTR(" \n"), false);
-            // oled_offset_layer = (oled_max_chars() - strlen("* FN1 *")) / 2;
-            // //oled_set_cursor(oled_offset_layer, 0);
-            // //oled_write("* FN1 *", false);
-            // oled_write_P(PSTR("* FN1 *\n"), false);
-            // //oled_set_cursor(0,2);
-            // //oled_write_P(PSTR(" \n"), false);
-            // // row 1
-            // oled_set_cursor(0, 2);
-            // oled_write_ln("M1", false);
-
-            // oled_offset_row1 = strlen("M1") + 1;
-            // oled_set_cursor(oled_offset_row1, 2);
-            // oled_write_ln("M2", false);
-
-            // oled_offset_row2 = oled_offset_row1 + strlen("M3") + 1;
-            // oled_set_cursor(oled_offset_row2, 2);
-            // oled_write_ln("M3", false);
-            
-            // oled_offset_row3 = oled_offset_row2 + strlen("M4") + 1;
-            // oled_set_cursor(oled_offset_row3, 2);
-            // oled_write_ln("M4", false);
-
+            oled_offset_layer = (oled_max_chars() - strlen("* FN1 *")) / 2;
+            oled_set_cursor(oled_offset_layer, 0);
             oled_write_P(PSTR("* FN1 *\n"), false);
-            
-            oled_write_P(PSTR("BT1 "), false);
-            oled_write_P(PSTR(" BT2 "), false);
-            oled_write_P(PSTR(" BT3 "), false);
-            oled_write_P(PSTR(" RST\n\n"), false);
-
-            oled_write_P(PSTR("BT4 "), false);
-            oled_write_P(PSTR(" BT5 "), false);
-            oled_write_P(PSTR(" BT6 "), false);
-            oled_write_P(PSTR(" BT7\n\n"), false);
-
-            oled_write_P(PSTR("BT8 "), false);
-            oled_write_P(PSTR("BT9 "), false);
-            oled_write_P(PSTR("BT10 "), false);
-            oled_write_P(PSTR("BT11\n\n"), false);
-
-            oled_write_P(PSTR("BT12 "), false);
-            oled_write_P(PSTR("BT13 "), false);
-            oled_write_P(PSTR("BT14 "), false);
-            oled_write_P(PSTR("BT15\n\n"), false);
-
+            oled_write_P(PSTR("___  ___  ___  RST\n\n"), false);
+            oled_write_P(PSTR("___  ___  ___  ___\n\n"), false);
+            oled_write_P(PSTR("___  ___  ___  ___\n\n"), false);
+            oled_write_P(PSTR("___  F24  BFS  SPD\n"), false);
             break;
 
         case _FN2:
+            oled_offset_layer = (oled_max_chars() - strlen("* FN2 *")) / 2;
+            oled_set_cursor(oled_offset_layer, 0);
             oled_write_P(PSTR("* FN2 *\n"), false);
-            break;
+            oled_write_P(PSTR("___  ___  ___  RST\n\n"), false);
+            oled_write_P(PSTR("___  ___  ___  ___\n\n"), false);
+            oled_write_P(PSTR("TST  ___  ___  ___\n\n"), false);
+            oled_write_P(PSTR("___  ___  ___  ___\n"), false);
 
         case _FN3:
+            oled_offset_layer = (oled_max_chars() - strlen("* FN3 *")) / 2;
+            oled_set_cursor(oled_offset_layer, 0);
             oled_write_P(PSTR("* FN3 *\n"), false);
+            oled_write_P(PSTR("ALT  ___  SFT  RST\n\n"), false);
+            oled_write_P(PSTR("LCT  ___   UP  RCT\n\n"), false);
+            oled_write_P(PSTR("___  LFT  ___  RHT\n\n"), false);
+            oled_write_P(PSTR("TST  ___  DWN  ___\n"), false);
             break;
     }
     return false;
 }
-
+#endif
 
 
 
@@ -282,8 +218,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN1:
             if(record->event.pressed) {
-                register_code16(KC_F19);
-                SEND_STRING("1 1.");
+                tap_code16(KC_HYPR);
+                SEND_STRING("a.");
             } else {
                 unregister_code16(keycode);
             }
@@ -292,7 +228,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN2:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 2.");
             } else {
                 unregister_code16(keycode);
@@ -302,7 +238,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN3:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 3.");
             } else {
                 unregister_code16(keycode);
@@ -312,7 +248,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN4:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 4.");
             } else {
                 unregister_code16(keycode);
@@ -322,7 +258,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN5:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 5.");
             } else {
                 unregister_code16(keycode);
@@ -332,7 +268,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN6:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 6.");
             } else {
                 unregister_code16(keycode);
@@ -342,7 +278,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN7:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 7.");
             } else {
                 unregister_code16(keycode);
@@ -352,7 +288,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN8:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 8.");
             } else {
                 unregister_code16(keycode);
@@ -362,7 +298,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN9:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 9.");
             } else {
                 unregister_code16(keycode);
@@ -373,7 +309,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         
         case KC_MOD_BTN10:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 10.");
             } else {
                 unregister_code16(keycode);
@@ -383,7 +319,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN11:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 11.");
             } else {
                 unregister_code16(keycode);
@@ -393,7 +329,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN12:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 12.");
             } else {
                 unregister_code16(keycode);
@@ -403,8 +339,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN13:
             if(record->event.pressed) {
-                register_code16(KC_F19);
-                SEND_STRING("1 13.");
+                tap_code16(KC_F24);
             } else {
                 unregister_code16(keycode);
             }
@@ -413,18 +348,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN14:
             if(record->event.pressed) {
-                register_code16(KC_F19);
-                SEND_STRING("1 14.");
+                tap_code16(KC_F23);
             } else {
                 unregister_code16(keycode);
             }
             return false;
             break;
 
+        // suspend macro for ahk
         case KC_MOD_BTN15:
             if(record->event.pressed) {
-                register_code16(KC_F19);
-                SEND_STRING("1 15.");
+                tap_code16(KC_HYPR);
+                SEND_STRING("suspend.");
             } else {
                 unregister_code16(keycode);
             }
@@ -433,7 +368,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN16:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 16.");
             } else {
                 unregister_code16(keycode);
@@ -443,7 +378,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MOD_BTN17:
             if(record->event.pressed) {
-                register_code16(KC_F19);
+                register_code16(KC_HYPR);
                 SEND_STRING("1 17.");
             } else {
                 unregister_code16(keycode);
